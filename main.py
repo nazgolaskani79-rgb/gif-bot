@@ -7,7 +7,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQ
 from pyrogram.errors import UserNotParticipant
 from PIL import Image
 
-# --- تنظیمات از سرور خوانده می‌شود ---
+# --- خواندن متغیرها از ریل‌وی ---
 API_ID = int(os.environ.get("API_ID", 0))
 API_HASH = os.environ.get("API_HASH", "")
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
@@ -64,11 +64,12 @@ def create_gif_from_photo(photo_bytes):
 async def check_membership(user_id):
     try:
         member = await app.get_chat_member(CHANNEL_ID, user_id)
+        # کلمه creator اضافه شد تا سازنده کانال هم تایید بشه
         return member.status in ("creator", "owner", "administrator", "member")
-        
     except UserNotParticipant:
         return False
-    except Exception:
+    except Exception as e:
+        print(f"Check Error: {e}")
         return False
 
 def join_keyboard():
