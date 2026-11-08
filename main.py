@@ -64,7 +64,8 @@ def create_gif_from_photo(photo_bytes):
 async def check_membership(user_id):
     try:
         member = await app.get_chat_member(CHANNEL_ID, user_id)
-        return member.status in ("owner", "administrator", "member")
+        return member.status in ("creator", "owner", "administrator", "member")
+        
     except UserNotParticipant:
         return False
     except Exception:
